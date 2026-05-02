@@ -18,3 +18,130 @@ protocol.c sebagai file pendukung
 Makefile untuk proses kompilasi
 
 Tujuan program ini adalah membuat komunikasi antar client melalui server dengan fitur identitas unik, broadcast pesan, dan logging aktivitas.
+
+### # protocol.h
+
+File ini berisi definisi yang dipakai bersama oleh server dan client, seperti:
+
+port server
+ukuran buffer
+struktur data client
+
+Fungsi utamanya adalah agar konstanta dan struktur yang sama bisa dipakai oleh beberapa file tanpa menulis ulang.
+
+### # protocol.c
+
+File ini merupakan file pendukung untuk modul protocol.
+Kalau di implementasi kamu isinya masih sederhana, file ini tetap dipakai agar struktur program lebih terpisah dan mudah dikembangkan.
+
+### # wired.c
+
+File ini adalah inti dari server.
+Fungsi yang dilakukan server:
+
+membuat socket server
+bind ke alamat dan port
+menunggu koneksi client
+menerima nama user
+memastikan nama user tidak sama dengan client lain
+menyimpan daftar client yang aktif
+mengirim pesan ke client lain dengan mekanisme broadcast
+mencatat aktivitas ke file history.log
+
+Selain itu, server juga menangani perintah keluar seperti /exit, sehingga koneksi client dapat ditutup dengan rapi.
+
+### # navi.c
+
+File ini adalah program client.
+Fungsi yang dilakukan client:
+
+membuat koneksi ke server
+mengirim nama user
+mengirim pesan ke server
+menerima pesan dari server
+menampilkan pesan dari client lain
+
+Client inilah yang dipakai pengguna untuk bergabung ke The Wired.
+
+### # Makefile
+
+File ini digunakan untuk mempermudah kompilasi program.
+
+Dengan make, program server dan client dapat dibangun tanpa harus mengetik command gcc satu per satu.
+
+## Soal 2
+Pada soal 2, dibuat sistem komunikasi antar proses dengan konsep IPC (Inter Process Communication).
+Program ini menggunakan dua proses utama:
+
+orion.c sebagai server
+
+eternal.c sebagai client
+
+File pendukungnya adalah:
+
+arena.h untuk definisi struktur dan konfigurasi
+Makefile untuk kompilasi dan pembersihan IPC
+
+Komunikasi pada soal ini tidak menggunakan RPC, tetapi berjalan secara lokal melalui IPC seperti Message Queue dan Shared Memory.
+
+### # arena.h
+
+File ini berisi bagian penting yang dipakai bersama oleh orion.c dan eternal.c, seperti:
+
+definisi struct
+
+konfigurasi program
+
+key IPC
+
+kebutuhan data lain yang dipakai saat pertarungan
+
+Fungsinya adalah sebagai pusat pengaturan sistem Battle Eterion.
+
+### # orion.c
+
+File ini berperan sebagai server.
+
+Tugas utama orion adalah:
+
+menyiapkan layanan yang akan dipakai client
+
+menerima koneksi/permintaan dari eternal
+
+menjaga komunikasi internal antar proses
+
+menjadi pusat pengolahan data pertarungan
+
+Dari sisi konsep, orion adalah pihak yang selalu siap menerima dan memproses informasi.
+
+### # eternal.c
+
+File ini berperan sebagai client.
+
+Tugas utama eternal adalah:
+
+menampilkan menu utama
+
+melakukan register
+
+melakukan login
+
+mengirim data ke server
+
+menerima respons dari server
+
+Jadi, eternal adalah antarmuka yang dipakai pengguna untuk berinteraksi dengan sistem Battle Eterion.
+
+### # Makefile
+
+File ini mempermudah proses kompilasi dan pembersihan IPC.
+
+Biasanya Makefile digunakan untuk:
+
+compile orion dan eternal
+
+membersihkan file hasil kompilasi
+
+menghapus shared memory dan message queue yang masih tersisa
+
+Perintah tambahan seperti make clear_ipc sangat membantu saat program sudah pernah dijalankan dan masih menyisakan IPC di sistem.
