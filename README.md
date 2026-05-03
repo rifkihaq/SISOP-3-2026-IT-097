@@ -94,6 +94,10 @@ all:
 	gcc wired.c protocol.c -o wired
 	gcc navi.c protocol.c -o navi
 ```
+### OUTPUT
+<img width="952" height="81" alt="Screenshot 2026-05-03 184024" src="https://github.com/user-attachments/assets/e988c866-24a2-4453-8c4e-0d010b1d98b3" />
+<img width="1476" height="127" alt="Screenshot 2026-05-03 184447" src="https://github.com/user-attachments/assets/8602566a-2c69-49c7-8d3d-417656207d5d" />
+<img width="1474" height="511" alt="Screenshot 2026-05-03 184423" src="https://github.com/user-attachments/assets/ea3da3e5-1888-4aea-9976-bdf0aa3c2724" />
 
 ## Soal 2
 Pada soal 2, dibuat sistem komunikasi antar proses dengan konsep IPC (Inter Process Communication).
