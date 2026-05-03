@@ -128,6 +128,8 @@ kebutuhan data lain yang dipakai saat pertarungan
 
 Fungsinya adalah sebagai pusat pengaturan sistem Battle Eterion.
 
+[Lihat kode arena.h](./soal2/arena.h)
+
 ### # orion.c
 
 File ini berperan sebagai server.
@@ -143,6 +145,8 @@ menjaga komunikasi internal antar proses
 menjadi pusat pengolahan data pertarungan
 
 Dari sisi konsep, orion adalah pihak yang selalu siap menerima dan memproses informasi.
+
+[Lihat kode orion.c](./soal2/orion.c)
 
 ### # eternal.c
 
@@ -162,6 +166,8 @@ menerima respons dari server
 
 Jadi, eternal adalah antarmuka yang dipakai pengguna untuk berinteraksi dengan sistem Battle Eterion.
 
+[Lihat kode eternal.c](./soal2/eternal.c)
+
 ### # Makefile
 
 File ini mempermudah proses kompilasi dan pembersihan IPC.
@@ -175,3 +181,32 @@ membersihkan file hasil kompilasi
 menghapus shared memory dan message queue yang masih tersisa
 
 Perintah tambahan seperti make clear_ipc sangat membantu saat program sudah pernah dijalankan dan masih menyisakan IPC di sistem.
+```
+<<<<<<< HEAD
+all:
+	gcc wired.c protocol.c -o wired
+	gcc navi.c protocol.c -o navi
+=======
+CC = gcc
+CFLAGS = -Wall -pthread
+LDFLAGS = -lrt
+
+all: server client
+
+server: orion.c arena.h
+	$(CC) $(CFLAGS) orion.c -o orion $(LDFLAGS)
+
+client: eternal.c arena.h
+	$(CC) $(CFLAGS) eternal.c -o eternal $(LDFLAGS)
+
+clean:
+	rm -f orion eternal
+
+clear_ipc:
+	ipcs -m | grep 0x00001234 | awk '{print $$2}' | xargs -r ipcrm -m
+	ipcs -q | grep 0x00005678 | awk '{print $$2}' | xargs -r ipcrm -q
+	ipcs -s | grep 0x00009012 | awk '{print $$2}' | xargs -r ipcrm -s
+>>>>>>> 4bc4df9 (soal2)
+```
+### OUTPUT
+<img width="1919" height="1020" alt="Screenshot 2026-05-03 190630" src="https://github.com/user-attachments/assets/f348ebd7-7d3f-479c-bc6b-82ccbeec5fb5" />
