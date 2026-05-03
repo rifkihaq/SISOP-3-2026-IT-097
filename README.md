@@ -28,12 +28,29 @@ ukuran buffer
 struktur data client
 
 Fungsi utamanya adalah agar konstanta dan struktur yang sama bisa dipakai oleh beberapa file tanpa menulis ulang.
+```
+#ifndef PROTOCOL_H
+#define PROTOCOL_H
+
+#define PORT 8080
+#define MAX_CLIENTS 10
+#define BUFFER_SIZE 1024
+
+typedef struct {
+    int socket;
+    char name[50];
+} Client;
+
+#endif
+```
 
 ### # protocol.c
 
 File ini merupakan file pendukung untuk modul protocol.
 Kalau di implementasi kamu isinya masih sederhana, file ini tetap dipakai agar struktur program lebih terpisah dan mudah dikembangkan.
-
+```
+#include "protocol.h"
+```
 ### # wired.c
 
 File ini adalah inti dari server.
@@ -50,6 +67,8 @@ mencatat aktivitas ke file history.log
 
 Selain itu, server juga menangani perintah keluar seperti /exit, sehingga koneksi client dapat ditutup dengan rapi.
 
+[Lihat kode wired.c](./soal1/wired.c)
+
 ### # navi.c
 
 File ini adalah program client.
@@ -63,11 +82,18 @@ menampilkan pesan dari client lain
 
 Client inilah yang dipakai pengguna untuk bergabung ke The Wired.
 
+[Lihat kode navi.c](./soal1/navi.c)
+
 ### # Makefile
 
 File ini digunakan untuk mempermudah kompilasi program.
 
 Dengan make, program server dan client dapat dibangun tanpa harus mengetik command gcc satu per satu.
+```
+all:
+	gcc wired.c protocol.c -o wired
+	gcc navi.c protocol.c -o navi
+```
 
 ## Soal 2
 Pada soal 2, dibuat sistem komunikasi antar proses dengan konsep IPC (Inter Process Communication).
